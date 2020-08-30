@@ -21,7 +21,7 @@
         </commentGenerator>
         <!--数据库驱动配置-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL=""
+                        connectionURL=" "
                         userId="="
                         password="">
             <!--可以解决数据库中字段，对应生成JavaBean字段缺失或者错误-->

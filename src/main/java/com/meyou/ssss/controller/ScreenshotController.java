@@ -12,11 +12,9 @@ import com.meyou.ssss.service.BanjiClassService;
 import com.meyou.ssss.service.ScreenshotService;
 import com.meyou.ssss.service.StudentService;
 import com.meyou.ssss.service.TokenService;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
 import java.util.Objects;
 import java.util.Optional;
 

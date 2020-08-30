@@ -1,6 +1,7 @@
 package com.meyou.ssss.common.result;
 
 import com.meyou.ssss.common.constant.ResultCode;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meyou.ssss.dao.BanjiclassMapper">
+
+    <resultMap id="joinBanjiAndMonitorResult" type="com.meyou.ssss.domain.Banjiclass">
+        <id column="class_id" property="classId" jdbcType="BIGINT"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="class_amount" property="classAmount" jdbcType="INTEGER"/>
+        <result column="majorID_class" property="majoridClass" jdbcType="INTEGER"/>
+        <result column="monitorID_class" property="monitoridClass" jdbcType="BIGINT"/>
+
+        <association property="monitor" javaType="com.meyou.ssss.domain.Monitor">
+            <id column="mnt_id" property="mntId" jdbcType="BIGINT"/>
+            <result column="mnt_name" property="mntName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+</mapper>

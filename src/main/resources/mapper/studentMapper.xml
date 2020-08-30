@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meyou.ssss.dao.StudentMapper">
+    <resultMap id="joinStudentInfoResult" type="com.meyou.ssss.domain.Student">
+        <id column="stu_id" property="stuId" jdbcType="BIGINT"/>
+        <result column="stu_name" property="stuName" jdbcType="VARCHAR"/>
+        <!--<result column="stu_password" property="password" jdbcType="JdbcType.VARCHAR"/>-->
+        <result column="grade" property="grade" jdbcType="INTEGER"/>
+        <result column="monitorID_stu" property="monitoridStu" jdbcType="BIGINT"/>
+        <result column="collegeName_stu" property="collegenameStu" jdbcType="VARCHAR"/>
+        <result column="majorName_stu" property="majornameStu" jdbcType="VARCHAR"/>
+
+        <association property="monitor" javaType="com.meyou.ssss.domain.Monitor">
+            <id column="mnt_id" property="mntId" jdbcType="BIGINT"/>
+            <result column="mnt_name" property="mntName" jdbcType="VARCHAR"/>
+        </association>
+        <association property="college" javaType="com.meyou.ssss.domain.College">
+            <id column="college_id" property="collegeId" jdbcType="VARCHAR"/>
+            <result column="college_amount" property="collegeAmount" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+    <!--截图和学生join连接查询-->
+    <resultMap id="joinScreenshotInfoResult" type="com.meyou.ssss.domain.Student">
+        <id column="stu_id" property="stuId" jdbcType="BIGINT"/>
+        <result column="stu_name" property="stuName" jdbcType="VARCHAR"/>
+        <!--<result column="stu_password" property="password" jdbcType="JdbcType.VARCHAR"/>-->
+        <result column="grade" property="grade" jdbcType="INTEGER"/>
+        <result column="monitorID_stu" property="monitoridStu" jdbcType="BIGINT"/>
+        <result column="collegeName_stu" property="collegenameStu" jdbcType="VARCHAR"/>
+        <result column="majorName_stu" property="majornameStu" jdbcType="VARCHAR"/>
+
+        <association property="screenshot" javaType="com.meyou.ssss.domain.Screenshots">
+            <id column="scrnsht_ID" property="scrnshtId" jdbcType="VARCHAR"/>
+            <result column="path" property="path" jdbcType="VARCHAR"/>
+            <result column="submitted" property="submitted" jdbcType="BIT"/>
+            <result column="taskID_scrnsht" property="taskidScrnsht" jdbcType="BIGINT"/>
+            <result column="studentID_scrnsht" property="studentidScrnsht" jdbcType="BIGINT"/>
+        </association>
+    </resultMap>
+</mapper>

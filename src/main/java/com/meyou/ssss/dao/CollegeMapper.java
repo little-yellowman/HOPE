@@ -1,7 +1,6 @@
 package com.meyou.ssss.dao;
 
 import com.meyou.ssss.domain.College;
-import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.delete.DeleteDSLCompleter;

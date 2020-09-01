@@ -1,6 +1,7 @@
 package com.meyou.ssss.dao;
 
 import com.meyou.ssss.domain.Student;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.delete.DeleteDSLCompleter;
@@ -220,4 +221,6 @@ public interface StudentMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @ResultMap("joinScreenshotInfoResult")
     List<Student> selectManyJoinWithScrn(SelectStatementProvider selectStatement);
+
+
 }

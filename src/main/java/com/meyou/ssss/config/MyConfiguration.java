@@ -1,6 +1,7 @@
 package com.meyou.ssss.config;
 
 import com.meyou.ssss.common.handler.TokenInterceptor;
+import com.meyou.ssss.common.utils.Path;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -17,7 +18,7 @@ public class MyConfiguration {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/img/**")
-                        .addResourceLocations("file:F:\\数学与计算机科学学院\\计算机科学与技术-2017计算机科学与技术\\");
+                        .addResourceLocations("file:"+ Path.osPath());
             }
 
             //跨域请求

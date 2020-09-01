@@ -8,6 +8,7 @@ import com.meyou.ssss.domain.Student;
 import com.meyou.ssss.service.StudentService;
 import com.meyou.ssss.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -16,9 +16,14 @@ import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 @Service
 public class StudentService {
+    private final StudentMapper studentMapper;
+
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    private StudentMapper studentMapper;
+    public StudentService(StudentMapper studentMapper) {
+        this.studentMapper = studentMapper;
+    }
+
 
     //根据主键查询一个学生
     public Optional<Student> selectOneById(Long sid){
@@ -32,7 +37,7 @@ public class StudentService {
         return studentMapper.insert(form);
     }
 
-    //查询截图的完整信心，班长查看
+    //查询截图的完整信息，班长查看
     public List<Student> findAll(Long taskId, Long monitorId){
 
         SelectStatementProvider findAll = select(scrnshtId,stuId, stuName, submitted)

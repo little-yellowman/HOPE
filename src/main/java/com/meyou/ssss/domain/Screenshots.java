@@ -1,6 +1,7 @@
 package com.meyou.ssss.domain;
 
 import javax.annotation.Generated;
+import java.util.List;
 
 /**
  *
@@ -8,6 +9,16 @@ import javax.annotation.Generated;
  * This class corresponds to the database table screenshots
  */
 public class Screenshots {
+    //图片放大时，访问的路径
+    private List<String> srcList;
+
+    public List<String> getSrcList() {
+        return srcList;
+    }
+
+    public void setSrcList(List<String> srcList) {
+        this.srcList = srcList;
+    }
 
     public Student getStudent() {
         return student;

@@ -30,6 +30,17 @@ public class ScreenshotService {
         return insert;
     }
 
+    /*
+    *@Description:删除截图
+    *@Author:yuan yulin
+    *@Param: screenshot 的id
+    */
+    public int delScreenshot(String scnId){
+
+        return screenshotsMapper.deleteByPrimaryKey(scnId);
+    }
+
+
     //根据学生id和截图任务id精确查找提交的截图
     public Optional<Screenshots> findOne(Long stuId, Long taskId){
         Optional<Screenshots> screenshots = screenshotsMapper.selectOne(c ->
@@ -39,10 +50,10 @@ public class ScreenshotService {
         return screenshots;
     }
 
-    //查询截图的完整信心，班长查看
+    //查询截图的完整信息，班长查看，和student表join
     public List<Screenshots> findAll(Long taskId, Long monitorId){
 
-        SelectStatementProvider findAll = select(scrnshtId,stuId, stuName, submitted)
+        SelectStatementProvider findAll = select(scrnshtId,stuId, stuName,studentidScrnsht, submitted,path)
                 .from(screenshots)
                 .rightJoin(student)
                 .on(stuId, equalTo(studentidScrnsht))
@@ -52,5 +63,13 @@ public class ScreenshotService {
                 .render(RenderingStrategies.MYBATIS3);
 
         return screenshotsMapper.selectManyJoin(findAll);
+    }
+
+    //查询所有的截图
+    public List<Screenshots> findAll(Long taskId){
+
+        return screenshotsMapper.select(c->
+                c.where(taskidScrnsht,isEqualTo(taskId))
+        );
     }
 }

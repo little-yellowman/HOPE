@@ -5,31 +5,32 @@ import com.meyou.ssss.common.anotation.StuLoginToken;
 import com.meyou.ssss.common.constant.ResultCode;
 import com.meyou.ssss.common.result.Result;
 import com.meyou.ssss.common.utils.MyTimestamp;
-import com.meyou.ssss.domain.Banjiclass;
+import com.meyou.ssss.common.utils.Path;
 import com.meyou.ssss.domain.Screenshots;
-import com.meyou.ssss.domain.Student;
-import com.meyou.ssss.service.BanjiClassService;
 import com.meyou.ssss.service.ScreenshotService;
-import com.meyou.ssss.service.StudentService;
 import com.meyou.ssss.service.TokenService;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/screenshot")
 public class ScreenshotController {
-    private StudentService studentService;
-    private BanjiClassService banji;
     private ScreenshotService screenshotService;
+    private Path pa;
 
-    public ScreenshotController(StudentService studentService, BanjiClassService banji, ScreenshotService screenshotService) {
-        this.studentService = studentService;
-        this.banji = banji;
+    public ScreenshotController( ScreenshotService screenshotService, Path path) {
         this.screenshotService = screenshotService;
+        this.pa = path;
     }
+
 
     @PostMapping("/upload")
     @StuLoginToken
@@ -41,20 +42,8 @@ public class ScreenshotController {
         String token = request.getHeader("token");
         String jwtsid = JWT.decode(token).getAudience().get(0);
         long sid = Long.valueOf(jwtsid);
-        Student student = studentService.selectOneById(sid).get();
-        Banjiclass monitor = banji.findByMonitorId(student.getMonitoridStu()).get();
 
-        StringBuilder sb = new StringBuilder();
-        String separator = File.separator;
-        //存储在本地的路径
-        String path = sb.append("F:").append(separator)
-                .append(student.getCollegenameStu()).append(separator)
-                .append(student.getMajornameStu()).append("-")
-                .append(monitor.getClassName()).append(separator)
-                .append(screenshots.getTaskidScrnsht()).append(separator)
-                .append(student.getStuId()).append(student.getStuName())
-                .append(".png")
-                .toString();
+        String path = pa.basePath(sid,screenshots.getTaskidScrnsht()) + pa.imgName(sid);
 
         //拼装组合screenshots对象
         screenshots.setPath(path);
@@ -62,7 +51,7 @@ public class ScreenshotController {
         screenshots.setStudentidScrnsht(sid);
 
         try {
-            File f = new File(path);
+            File f = new File(Path.osPath()+path);
             //保存图片
             file.transferTo(f);
             int success = screenshotService.saveScreenShot(screenshots);
@@ -80,26 +69,34 @@ public class ScreenshotController {
         String stuId = TokenService.decodeToken(request, 0);
         Optional<Screenshots> screenshot = screenshotService.findOne(Long.valueOf(stuId), taskId);
 
+        if (screenshot.isPresent()){
+            screenshotService.delScreenshot(screenshot.get().getScrnshtId());
+        }
         return !screenshot.isPresent();
     }
 
-    @PostMapping("/test")
-    public MultipartFile test(){
-        InputStream inputStream = null;
-        File f = new File("F:\\数学与计算机科学学院\\计算机科学与技术-2017计算机科学与技术\\1597909069174\\201713453131袁宇林.png");
-        try {
-            inputStream = new FileInputStream(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    @GetMapping("/findAll")
+    @StuLoginToken
+    public List<Screenshots> findAll(Long taskId,HttpServletRequest request){
+        String monitorId = JWT.decode(request.getHeader("token")).getAudience().get(2);
 
-        MultipartFile file = (MultipartFile) inputStream;
-        return file;
+        String prefix = Path.getRequestPrefix(request);
+        List<Screenshots> all = screenshotService.findAll(taskId,Long.valueOf(monitorId));
+        for (Screenshots scr : all) {
+            //拼接访问的路径
+            String path = scr.getPath();
+            StringBuilder sb = new StringBuilder();
+            sb.append(prefix).append("/img/").append(path);
+            String url = sb.toString();
+            scr.setPath(url);
+
+            //设置图片放大时的访问路径
+            List<String> term = new ArrayList<>();
+            term.add(url);
+            scr.setSrcList(term);
+        }
+        return all;
     }
+
+
 }

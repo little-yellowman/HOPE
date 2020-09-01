@@ -10,6 +10,7 @@ import com.meyou.ssss.domain.Monitor;
 import com.meyou.ssss.domain.SsTask;
 import com.meyou.ssss.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -27,6 +28,23 @@ public class TaskController {
     public TaskController(SsTaskMapper taskMapper, TaskService taskService) {
         this.taskMapper = taskMapper;
         this.taskService = taskService;
+    }
+
+    @PostMapping("/update")
+    public Result updateTask(@RequestBody SsTask ruleForm){
+
+        int re = taskService.updateTask(ruleForm);
+
+        if (re > 0 )
+            return Result.success();
+
+        return Result.error(ResultCode.ERROR);
+    }
+
+    @GetMapping("/findOne")
+    public SsTask findOne(Long sstId){
+
+        return taskService.findOne(sstId).get();
     }
 
     //根据班长id获得所有task
@@ -58,5 +76,16 @@ public class TaskController {
         String MonitorId = JWT.decode(request.getHeader("token")).getAudience().get(2);
 
         return taskService.findAll(Long.valueOf(MonitorId));
+    }
+
+    @GetMapping("/delOne")
+    public Result delTask(Long sstId){
+        int value = taskService.delTask(sstId);
+
+        if (value > 0){
+            return Result.success();
+        }
+
+        return Result.error(ResultCode.ERROR);
     }
 }

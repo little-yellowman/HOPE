@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.meyou.ssss.dao.StudentMapper">
+
     <resultMap id="joinStudentInfoResult" type="com.meyou.ssss.domain.Student">
         <id column="stu_id" property="stuId" jdbcType="BIGINT"/>
         <result column="stu_name" property="stuName" jdbcType="VARCHAR"/>

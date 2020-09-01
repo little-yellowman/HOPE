@@ -10,7 +10,6 @@ import com.meyou.ssss.domain.Monitor;
 import com.meyou.ssss.domain.SsTask;
 import com.meyou.ssss.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

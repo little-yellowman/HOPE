@@ -1,9 +1,10 @@
 package com.meyou.ssss.dao;
 
-import java.sql.JDBCType;
-import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
+
+import javax.annotation.Generated;
+import java.sql.JDBCType;
 
 public final class MonitorDynamicSqlSupport {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2020-08-01T16:22:07.925+08:00", comments="Source Table: monitor")

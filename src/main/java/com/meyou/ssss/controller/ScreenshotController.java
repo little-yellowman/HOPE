@@ -9,7 +9,6 @@ import com.meyou.ssss.common.utils.Path;
 import com.meyou.ssss.domain.Screenshots;
 import com.meyou.ssss.service.ScreenshotService;
 import com.meyou.ssss.service.TokenService;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
